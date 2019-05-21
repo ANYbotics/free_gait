@@ -22,7 +22,7 @@ bool AdapterBase::frameIdExists(const std::string& frameId) const
 {
   if (frameId == getBaseFrameId()) return true;
   if (frameId == getWorldFrameId()) return true;
-  if (frameId == "map") return true;
+  //if (frameId == "map") return true; //TODO( paco): Extend through plugin!
   return false;
 }
 
