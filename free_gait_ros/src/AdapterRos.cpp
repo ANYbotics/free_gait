@@ -66,33 +66,6 @@ const std::string AdapterRos::getRobotStateMessageType()
   return adapterRosInterface_->getRobotStateMessageType();
 }
 
-bool AdapterRos::subscribeToLocalization(const std::string& localizationTopic)
-{
-  // Get topic name parameter.
-  std::string topic(localizationTopic);
-  if (topic.empty()) {
-    if (nodeHandle_.hasParam("/free_gait/localization_topic")) {
-      nodeHandle_.getParam("/free_gait/localization_topic", topic);
-    } else {
-      ROS_ERROR("Did not find ROS parameter for localization topic '/free_gait/localization_topic'.");
-      return false;
-    }
-  }
-
-  // Subscribe.
-  return adapterRosInterface_->subscribeToLocalization(topic);
-}
-
-void AdapterRos::unsubscribeFromLocalization()
-{
-  adapterRosInterface_->unsubscribeFromLocalization();
-}
-
-const std::string AdapterRos::getLocalizationMessageType()
-{
-  return adapterRosInterface_->getLocalizationMessageType();
-}
-
 bool AdapterRos::isReady() const
 {
   return adapterRosInterface_->isReady();

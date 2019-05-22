@@ -32,9 +32,6 @@ class AdapterRos
   bool subscribeToRobotState(const std::string& robotStateTopic = "");
   void unsubscribeFromRobotState();
   const std::string getRobotStateMessageType();
-  bool subscribeToLocalization(const std::string& localizationTopic = "");
-  void unsubscribeFromLocalization();
-  const std::string getLocalizationMessageType();
   bool isReady() const ;
   bool updateAdapterWithState();
   const AdapterBase& getAdapter() const;
