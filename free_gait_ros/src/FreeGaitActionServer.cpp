@@ -110,7 +110,7 @@ bool FreeGaitActionServer::isActive()
 
 void FreeGaitActionServer::goalCallback()
 {
-  ROS_INFO("Received goal for StepAction.");
+  ROS_DEBUG("Received goal for StepAction.");
   if (isBlocked_) {
     ROS_WARN("StepAction server is blocked, goal will not be processed!");
     return;
@@ -168,7 +168,7 @@ void FreeGaitActionServer::goalCallback()
 
 void FreeGaitActionServer::preemptCallback()
 {
-  ROS_INFO("StepAction is requested to preempt.");
+  ROS_DEBUG("StepAction is requested to preempt.");
   if (isBlocked_) {
     ROS_WARN("StepAction cannot be preempted, server is blocked!");
     return;
