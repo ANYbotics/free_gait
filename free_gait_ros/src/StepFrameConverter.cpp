@@ -11,7 +11,7 @@
 
 namespace free_gait {
 
-StepFrameConverter::StepFrameConverter(AdapterBase& adapter)
+StepFrameConverter::StepFrameConverter(const AdapterBase& adapter)
     : adapter_(adapter)
 {
 }

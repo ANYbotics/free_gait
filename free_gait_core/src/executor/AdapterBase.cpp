@@ -68,7 +68,6 @@ Position AdapterBase::transformPosition(const std::string& inputFrameId,
     } else {
       frameError = true;
     }
-
   } else {
     frameError = true;
   }

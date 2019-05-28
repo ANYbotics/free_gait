@@ -19,7 +19,7 @@ namespace free_gait {
 class StepFrameConverter
 {
  public:
-  StepFrameConverter(AdapterBase& adapter);
+  StepFrameConverter(const AdapterBase& adapter);
   virtual ~StepFrameConverter() = default;
 
   bool adaptCoordinates(StepQueue& stepQueue, const std::string& sourceFrameId,
@@ -47,7 +47,7 @@ class StepFrameConverter
                     Transform& transform);
 
  private:
-  AdapterBase& adapter_;
+  const AdapterBase& adapter_;
 };
 
 } /* namespace free_gait */

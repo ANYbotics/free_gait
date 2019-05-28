@@ -12,6 +12,7 @@
   <buildtool_depend>catkin</buildtool_depend>
 
   <depend>eigen</depend>
+  <depend>any_measurements</depend>
   <depend>quadruped_model</depend>
   <depend>numopt_common</depend>
   <depend>numopt_quadprog</depend>
