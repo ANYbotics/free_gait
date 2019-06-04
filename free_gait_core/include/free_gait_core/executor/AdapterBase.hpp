@@ -1,8 +1,8 @@
 /*
  * AdapterBase.hpp
  *
- *  Created on: Oct 22, 2015 (Refactored May 20, 2019)
- *      Authors: Péter Fankhauser, Francisco Giraldez Gamez
+ *  Created on: Oct 22, 2015 
+ *      Author: Péter Fankhauser
  *   Institute: ETH Zurich, Autonomous Systems Lab
  */
 
