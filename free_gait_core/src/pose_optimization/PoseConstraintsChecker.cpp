@@ -38,7 +38,7 @@ bool PoseConstraintsChecker::check(const Pose& pose)
   // Check center of mass.
   grid_map::Polygon supportRegionCopy(supportRegion_);
   supportRegionCopy.offsetInward(centerOfMassTolerance_);
-  if (!supportRegion_.isInside(adapter_.getCenterOfMassInWorldFrame().vector().head(2))) {
+  if (!supportRegionCopy.isInside(adapter_.getCenterOfMassInWorldFrame().vector().head(2))) {
     return false;
   }
 
