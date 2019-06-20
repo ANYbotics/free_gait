@@ -73,6 +73,16 @@ class BaseAuto : public BaseMotionBase
   double getSupportMargin() const;
   void setSupportMargin(double supportMargin);
   void setTolerateFailingOptimization(const bool tolerateFailingOptimization);
+  double getCenterOfMassTolerance() const;
+  void setCenterOfMassTolerance(const double tolerance);
+  double getLegLengthTolerance() const;
+  void setLegLengthTolerance(const double tolerance);
+  double getMinLimbLengthScale() const;
+  void setMinLimbLengthScale(const double scale);
+  double getMaxLimbLengthAtClosingContactScale() const;
+  void setMaxLimbLengthAtClosingContactScale(const double scale);
+  double getMaxLimbLengthAtOpeningContactScale() const;
+  void setMaxLimbLengthAtOpeningContactScale(const double scale);
 
   /*!
    * Evaluate the base pose at a given time.
@@ -102,6 +112,11 @@ class BaseAuto : public BaseMotionBase
   double averageAngularVelocity_;
   double supportMargin_;
   double minimumDuration_;
+  double centerOfMassTolerance_;
+  double legLengthTolerance_;
+  double minLimbLengthScale_;
+  double maxLimbLengthAtClosingContactScale_;
+  double maxLimbLengthAtOpeningContactScale_;
 
  private:
 

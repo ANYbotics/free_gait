@@ -49,6 +49,11 @@ class StepParameters
     double averageAngularVelocity = 0.28;
     double supportMargin = 0.04;
     double minimumDuration = 0.1;
+    double centerOfMassTolerance = 0.0;
+    double legLengthTolerance = 0.0;
+    double minLimbLengthScale = 0.325;
+    double maxLimbLengthAtClosingContactScale = 0.887;
+    double maxLimbLengthAtOpeningContactScale = 0.919;
     PlanarStance nominalPlanarStanceInBaseFrame;
 
     BaseAutoParameters()

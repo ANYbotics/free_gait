@@ -345,6 +345,11 @@ bool StepRosConverter::fromMessage(const free_gait_msgs::BaseAuto& message,
   baseAuto.averageLinearVelocity_ = message.average_linear_velocity;
   baseAuto.averageAngularVelocity_ = message.average_angular_velocity;
   baseAuto.supportMargin_ = message.support_margin;
+  baseAuto.centerOfMassTolerance_ = message.center_of_mass_tolerance;
+  baseAuto.legLengthTolerance_ = message.leg_length_tolerance;
+  baseAuto.minLimbLengthScale_ = message.min_limb_length_scale;
+  baseAuto.maxLimbLengthAtClosingContactScale_ = message.max_limb_length_at_closing_contact_scale;
+  baseAuto.maxLimbLengthAtOpeningContactScale_ = message.max_limb_length_at_opening_contact_scale;
   return true;
 }
 
@@ -627,6 +632,11 @@ bool StepRosConverter::toMessage(const BaseAuto& baseAuto, free_gait_msgs::BaseA
   message.average_linear_velocity = baseAuto.averageLinearVelocity_;
   message.average_angular_velocity = baseAuto.averageAngularVelocity_;
   message.support_margin = baseAuto.supportMargin_;
+  message.center_of_mass_tolerance = baseAuto.centerOfMassTolerance_;
+  message.leg_length_tolerance = baseAuto.legLengthTolerance_;
+  message.min_limb_length_scale = baseAuto.minLimbLengthScale_;
+  message.max_limb_length_at_closing_contact_scale= baseAuto.maxLimbLengthAtClosingContactScale_;
+  message.max_limb_length_at_opening_contact_scale= baseAuto.maxLimbLengthAtOpeningContactScale_;
   return true;
 }
 

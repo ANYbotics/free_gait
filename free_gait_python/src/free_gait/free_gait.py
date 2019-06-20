@@ -238,6 +238,16 @@ def parse_base_auto(yaml_object):
         base_auto.average_angular_velocity = yaml_object['average_angular_velocity']
     if 'support_margin' in yaml_object:
         base_auto.support_margin = yaml_object['support_margin']
+    if 'center_of_mass_tolerance' in yaml_object:
+        base_auto.center_of_mass_tolerance = yaml_object['center_of_mass_tolerance']
+    if 'leg_length_tolerance' in yaml_object:
+        base_auto.leg_length_tolerance = yaml_object['leg_length_tolerance']
+    if 'min_limb_length_scale' in yaml_object:
+        base_auto.min_limb_length_scale = yaml_object['min_limb_length_scale']
+    if 'max_limb_length_at_closing_contact_scale' in yaml_object:
+        base_auto.max_limb_length_at_closing_contact_scale = yaml_object['max_limb_length_at_closing_contact_scale']
+    if 'max_limb_length_at_opening_contact_scale' in yaml_object:
+        base_auto.max_limb_length_at_opening_contact_scale = yaml_object['max_limb_length_at_opening_contact_scale']
     return base_auto
 
 

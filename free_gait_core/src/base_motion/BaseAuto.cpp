@@ -22,6 +22,11 @@ BaseAuto::BaseAuto()
       duration_(0.0),
       supportMargin_(0.0),
       minimumDuration_(0.0),
+      centerOfMassTolerance_(0.0),
+      legLengthTolerance_(0.0),
+      minLimbLengthScale_(0.0),
+      maxLimbLengthAtClosingContactScale_(0.0),
+      maxLimbLengthAtOpeningContactScale_(0.0),
       isComputed_(false),
       tolerateFailingOptimization_(false),
       controlSetup_ { {ControlLevel::Position, true}, {ControlLevel::Velocity, true},
@@ -40,6 +45,11 @@ BaseAuto::BaseAuto(const BaseAuto& other) :
     averageAngularVelocity_(other.averageAngularVelocity_),
     supportMargin_(other.supportMargin_),
     minimumDuration_(other.minimumDuration_),
+    centerOfMassTolerance_(other.centerOfMassTolerance_),
+    legLengthTolerance_(other.legLengthTolerance_),
+    minLimbLengthScale_(other.minLimbLengthScale_),
+    maxLimbLengthAtClosingContactScale_(other.maxLimbLengthAtClosingContactScale_),
+    maxLimbLengthAtOpeningContactScale_(other.maxLimbLengthAtOpeningContactScale_),
     start_(other.start_),
     target_(other.target_),
     duration_(other.duration_),
@@ -105,11 +115,17 @@ bool BaseAuto::prepareComputation(const State& state, const Step& step, const St
 
   // Define min./max. leg lengths.
   for (const auto& limb : adapter.getLimbs()) {
-    minLimbLenghts_[limb] = 0.2; // TODO Make as parameters.
+    // Computing the hip to foot distance when all the limb joints are at zero
+    Position positionBaseToFootAtZeroInBaseFrame = adapter.getPositionBaseToFootInBaseFrame(limb, JointPositionsLeg());
+    Position positionBaseToHipInBaseFrame = adapter.getPositionBaseToHipInBaseFrame(limb);
+    const double distanceHipToFootAtZero = (positionBaseToFootAtZeroInBaseFrame - positionBaseToHipInBaseFrame).norm();
+    // Compute the min limb length by multiplying hip to foot distance with a scaling factor
+    minLimbLenghts_[limb] = minLimbLengthScale_ * distanceHipToFootAtZero;
+    // Compute the max limb length by multiplying hip to foot distance with a scaling factor
     if (footholdsOfNextLegMotion_.find(limb) == footholdsOfNextLegMotion_.end()) {
-      maxLimbLenghts_[limb] = 0.545; // Foot stays in contact. // 0.57
+      maxLimbLenghts_[limb] = maxLimbLengthAtClosingContactScale_ * distanceHipToFootAtZero; // Foot stays in contact.
     } else {
-      maxLimbLenghts_[limb] = 0.565; // Foot leaves contact. // 0.6
+      maxLimbLenghts_[limb] = maxLimbLengthAtOpeningContactScale_ * distanceHipToFootAtZero; // Foot leaves contact.
     }
   }
 
@@ -133,7 +149,7 @@ bool BaseAuto::prepareComputation(const State& state, const Step& step, const St
   constraintsChecker_->setSupportStance(footholdsInSupport_);
   constraintsChecker_->setSupportRegion(supportRegion);
   constraintsChecker_->setLimbLengthConstraints(minLimbLenghts_, maxLimbLenghts_);
-  constraintsChecker_->setTolerances(0.002, 0.0); // TODO(avijayan) Make parameter.
+  constraintsChecker_->setTolerances(centerOfMassTolerance_, legLengthTolerance_);
 
   poseOptimizationSQP_.reset(new PoseOptimizationSQP(adapter));
   poseOptimizationSQP_->setCurrentState(state);
@@ -261,6 +277,56 @@ void BaseAuto::setSupportMargin(double supportMargin)
 void BaseAuto::setTolerateFailingOptimization(const bool tolerateFailingOptimization)
 {
   tolerateFailingOptimization_ = tolerateFailingOptimization;
+}
+
+double BaseAuto::getCenterOfMassTolerance() const
+{
+  return centerOfMassTolerance_;
+}
+
+void BaseAuto::setCenterOfMassTolerance(const double tolerance)
+{
+  centerOfMassTolerance_ = tolerance;
+}
+
+double BaseAuto::getLegLengthTolerance() const
+{
+  return legLengthTolerance_;
+}
+
+void BaseAuto::setLegLengthTolerance(const double tolerance)
+{
+  legLengthTolerance_ = tolerance;
+}
+
+double BaseAuto::getMinLimbLengthScale() const
+{
+  return minLimbLengthScale_;
+}
+
+void BaseAuto::setMinLimbLengthScale(const double scale)
+{
+  minLimbLengthScale_ = scale;
+}
+
+double BaseAuto::getMaxLimbLengthAtClosingContactScale() const
+{
+  return maxLimbLengthAtClosingContactScale_;
+}
+
+void BaseAuto::setMaxLimbLengthAtClosingContactScale(const double scale)
+{
+  maxLimbLengthAtClosingContactScale_ = scale;
+}
+
+double BaseAuto::getMaxLimbLengthAtOpeningContactScale() const
+{
+  return maxLimbLengthAtOpeningContactScale_;
+}
+
+void BaseAuto::setMaxLimbLengthAtOpeningContactScale(const double scale)
+{
+  maxLimbLengthAtOpeningContactScale_ = scale;
 }
 
 bool BaseAuto::computeHeight(const State& state, const StepQueue& queue, const AdapterBase& adapter)
@@ -420,6 +486,11 @@ std::ostream& operator<<(std::ostream& out, const BaseAuto& baseAuto)
   out << "Average Angular Velocity: " << baseAuto.averageAngularVelocity_ << std::endl;
   out << "Support Margin: " << baseAuto.supportMargin_ << std::endl;
   out << "Duration: " << baseAuto.duration_ << std::endl;
+  out << "CoM tolerance: " << baseAuto.centerOfMassTolerance_ << std::endl;
+  out << "Leg length tolerance: " << baseAuto.legLengthTolerance_ << std::endl;
+  out << "Minimum limb length scaling factor: " << baseAuto.minLimbLengthScale_ << std::endl;
+  out << "Maximum limb length at closing contact scaling factor: " << baseAuto.maxLimbLengthAtClosingContactScale_ << std::endl;
+  out << "Maximum limb length at opening contact scaling factor: " << baseAuto.maxLimbLengthAtOpeningContactScale_ << std::endl;
   out << "Start Position: " << baseAuto.start_.getPosition() << std::endl;
   out << "Start Orientation: " << baseAuto.start_.getRotation() << std::endl;
   out << "Start Orientation (yaw, pitch, roll) [deg]: " << 180.0 / M_PI * EulerAnglesZyx(baseAuto.start_.getRotation()).getUnique().vector().transpose() << std::endl;

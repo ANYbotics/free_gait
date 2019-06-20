@@ -250,6 +250,16 @@ void StepCompleter::setParameters(BaseAuto& baseAuto) const
     baseAuto.averageAngularVelocity_ = parameters.averageAngularVelocity;
   if (baseAuto.supportMargin_ == 0.0)
     baseAuto.supportMargin_ = parameters.supportMargin;
+  if (baseAuto.centerOfMassTolerance_ == 0.0)
+    baseAuto.centerOfMassTolerance_ = parameters.centerOfMassTolerance;
+  if (baseAuto.legLengthTolerance_ == 0.0)
+    baseAuto.legLengthTolerance_ = parameters.legLengthTolerance;
+  if (baseAuto.minLimbLengthScale_ == 0.0)
+    baseAuto.minLimbLengthScale_ = parameters.minLimbLengthScale;
+  if (baseAuto.maxLimbLengthAtClosingContactScale_ == 0.0)
+    baseAuto.maxLimbLengthAtClosingContactScale_ = parameters.maxLimbLengthAtClosingContactScale;
+  if (baseAuto.maxLimbLengthAtOpeningContactScale_ == 0.0)
+    baseAuto.maxLimbLengthAtOpeningContactScale_ = parameters.maxLimbLengthAtOpeningContactScale;
   baseAuto.minimumDuration_ = parameters.minimumDuration;
 
   baseAuto.nominalPlanarStanceInBaseFrame_.clear();
