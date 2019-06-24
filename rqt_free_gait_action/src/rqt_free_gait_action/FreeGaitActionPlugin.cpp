@@ -27,7 +27,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF     *
  * THE POSSIBILITY OF SUCH DAMAGE.                                            *
  *                                                                            *
- * Authors: Samuel Bachmann <samuel.bachmann@gmail.com>,                      *
+ * Authors: Samuel Bachmann <sbachmann@anybotics.com>  ,                      *
  *          Peter Fankhauser <pfankhauser@anybotics.com>                            *
  ******************************************************************************/
 

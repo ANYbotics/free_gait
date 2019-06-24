@@ -27,7 +27,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF     *
  * THE POSSIBILITY OF SUCH DAMAGE.                                            *
  *                                                                            *
- * Author: Samuel Bachmann <samuel.bachmann@gmail.com>                        *
+ * Author: Samuel Bachmann <sbachmann@anybotics.com>                          *
  ******************************************************************************/
 
 #include "rqt_free_gait_monitor/ClickableLabel.h"
