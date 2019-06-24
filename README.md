@@ -15,8 +15,6 @@ Affiliation: ANYbotics**
 
 This projected was initially developed at RSL, ETH Zurich.
 
-[![Build Status](https://ci.leggedrobotics.com/buildStatus/icon?job=github_leggedrobotics/free_gait/master)](https://ci.leggedrobotics.com/job/github_leggedrobotics/job/free_gait/job/master/)
-
 ## Publications
 
 If you use this work in an academic context, please cite the following publication(s):
