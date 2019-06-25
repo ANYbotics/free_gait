@@ -6,8 +6,8 @@
   <maintainer email="pfankhauser@anybotics.com">Peter Fankhauser</maintainer>
   <author email="pfankhauser@anybotics.com">Peter Fankhauser</author>
   <license>BSD</license>
-  <url type="website">https://github.com/leggedrobotics/free_gait</url>
-  <url type="bugtracker">https://github.com/leggedrobotics/free_gait/issues</url>
+  <url type="website">https://github.com/anybotics/free_gait</url>
+  <url type="bugtracker">https://github.com/anybotics/free_gait/issues</url>
 
   <buildtool_depend>catkin</buildtool_depend>
   <depend>rospy</depend>

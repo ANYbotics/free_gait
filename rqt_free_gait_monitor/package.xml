@@ -6,8 +6,8 @@
   <maintainer email="sbachmann@anybotics.com">Samuel Bachmann</maintainer>
   <author email="sbachmann@anybotics.com">Samuel Bachmann</author>
   <license>BSD</license>
-  <url type="website">https://github.com/leggedrobotics/free_gait</url>
-  <url type="bugtracker">https://github.com/leggedrobotics/free_gait/issues</url>
+  <url type="website">https://github.com/anybotics/free_gait</url>
+  <url type="bugtracker">https://github.com/anybotics/free_gait/issues</url>
 
   <buildtool_depend>catkin</buildtool_depend>
 
