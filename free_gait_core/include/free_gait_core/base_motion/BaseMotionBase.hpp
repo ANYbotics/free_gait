@@ -113,7 +113,16 @@ class BaseMotionBase
    */
   friend std::ostream& operator<< (std::ostream& out, const BaseMotionBase& baseMotion);
 
- private:
+protected:
+
+  /*!
+   * Returns a desired time to fit within the start and end time of the motion.
+   * @param time the desired time.
+   * @return the time mapped within the motion duration.
+   */
+  double mapTimeWithinDuration(const double time) const;
+
+private:
 
   //! Type of the base motion.
   Type type_;

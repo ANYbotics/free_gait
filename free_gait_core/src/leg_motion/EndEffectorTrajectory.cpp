@@ -139,7 +139,7 @@ const Position EndEffectorTrajectory::evaluatePosition(const double time) const
 {
   const double timeInRange = mapTimeWithinDuration(time);
   Position position;
-  trajectory_.evaluate(position.toImplementation(), time);
+  trajectory_.evaluate(position.toImplementation(), timeInRange);
   return position;
 }
 

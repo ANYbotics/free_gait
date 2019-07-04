@@ -202,7 +202,7 @@ void BaseAuto::reset()
 
 Pose BaseAuto::evaluatePose(const double time) const
 {
-  double timeInRange = time <= duration_ ? time : duration_;
+  const double timeInRange = mapTimeWithinDuration(time);
   Pose pose;
   trajectory_.evaluate(pose, timeInRange);
   return pose;
@@ -210,7 +210,7 @@ Pose BaseAuto::evaluatePose(const double time) const
 
 Twist BaseAuto::evaluateTwist(const double time) const
 {
-  double timeInRange = time <= duration_ ? time : duration_;
+  const double timeInRange = mapTimeWithinDuration(time);
   curves::CubicHermiteSE3Curve::DerivativeType derivative;
   trajectory_.evaluateDerivative(derivative, timeInRange, 1);
   Twist twist(derivative.getTranslationalVelocity().vector(),

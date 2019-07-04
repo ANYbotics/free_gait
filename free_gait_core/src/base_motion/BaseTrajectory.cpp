@@ -105,14 +105,15 @@ const std::string& BaseTrajectory::getFrameId(const ControlLevel& controlLevel) 
 
 Pose BaseTrajectory::evaluatePose(const double time) const
 {
+  const double timeInRange = mapTimeWithinDuration(time);
   Pose pose;
-  trajectory_.evaluate(pose, time);
+  trajectory_.evaluate(pose, timeInRange);
   return pose;
 }
 
 Twist BaseTrajectory::evaluateTwist(const double time) const
 {
-  double timeInRange = time <= duration_ ? time : duration_;
+  const double timeInRange = mapTimeWithinDuration(time);
   curves::CubicHermiteSE3Curve::DerivativeType derivative;
   trajectory_.evaluateDerivative(derivative, timeInRange, 1);
   Twist twist(derivative.getTranslationalVelocity().vector(),

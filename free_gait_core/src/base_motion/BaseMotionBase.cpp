@@ -155,4 +155,9 @@ std::ostream& operator<< (std::ostream& out, const BaseMotionBase::Type& type)
   }
 }
 
+double BaseMotionBase::mapTimeWithinDuration(const double time) const
+{
+  return time <= getDuration() ? time : getDuration();
+}
+
 } /* namespace */

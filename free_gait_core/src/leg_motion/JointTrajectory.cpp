@@ -186,10 +186,11 @@ const JointAccelerationsLeg JointTrajectory::evaluateAcceleration(const double t
 const JointEffortsLeg JointTrajectory::evaluateEffort(const double time) const
 {
   if (!isComputed_) throw std::runtime_error("JointTrajectory::evaluateEffort() cannot be called if trajectory is not computed.");
+  const double timeInRange = mapTimeWithinDuration(time);
   const auto& trajectories = trajectories_.at(ControlLevel::Effort);
   JointEffortsLeg jointEfforts;
   for (size_t i = 0; i < trajectories.size(); ++i) {
-    trajectories[i].evaluate(jointEfforts(i), time);
+    trajectories[i].evaluate(jointEfforts(i), timeInRange);
   }
   return jointEfforts;
 }
