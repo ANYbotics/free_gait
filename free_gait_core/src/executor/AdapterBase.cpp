@@ -29,19 +29,20 @@ Position AdapterBase::transformPosition(const std::string& inputFrameId,
                                         const std::string& outputFrameId,
                                         const Position& position) const
 {
-  //TODO(paco): Clean-up function
   Position transformedPosition;
   bool frameError = false;
 
+  if (inputFrameId == outputFrameId) {
+    return position;
+  }
+
   if (inputFrameId == getBaseFrameId()) {
 
-    if (outputFrameId == getBaseFrameId()) {
-      transformedPosition = position;
-    } else if (outputFrameId == getWorldFrameId()) {
+    if (outputFrameId == getWorldFrameId()) {
       transformedPosition = getPositionWorldToBaseInWorldFrame() + getOrientationBaseToWorld().rotate(position);
     } else if (frameIdExists(outputFrameId)) {
-      const Position positionInWorld = transformPosition(inputFrameId, getWorldFrameId(), position);
-      transformedPosition = transformPosition(getWorldFrameId(), outputFrameId, positionInWorld);
+      const Position positionInWorld = getPositionWorldToBaseInWorldFrame() + getOrientationBaseToWorld().rotate(position);
+      transformedPosition = getFrameTransform(outputFrameId).inverseTransform(positionInWorld);
     } else {
       frameError = true;
     }
@@ -50,8 +51,6 @@ Position AdapterBase::transformPosition(const std::string& inputFrameId,
 
     if (outputFrameId == getBaseFrameId()) {
       transformedPosition = getOrientationBaseToWorld().inverseRotate(position - getPositionWorldToBaseInWorldFrame());
-    } else if (outputFrameId == getWorldFrameId()) {
-      transformedPosition = position;
     } else if (frameIdExists(outputFrameId)) {
       transformedPosition = getFrameTransform(outputFrameId).inverseTransform(position);
     } else {
@@ -61,10 +60,13 @@ Position AdapterBase::transformPosition(const std::string& inputFrameId,
   } else if (frameIdExists(inputFrameId)) {
 
     if (outputFrameId == getBaseFrameId()) {
-      const Position positionInWorld = transformPosition(inputFrameId, getWorldFrameId(), position);
-      transformedPosition = transformPosition(getWorldFrameId(), outputFrameId, positionInWorld);
+      const Position positionInWorld = getFrameTransform(inputFrameId).transform(position);
+      transformedPosition = getOrientationBaseToWorld().inverseRotate(positionInWorld - getPositionWorldToBaseInWorldFrame());
     } else if (outputFrameId == getWorldFrameId()) {
       transformedPosition = getFrameTransform(inputFrameId).transform(position);
+    } else if (frameIdExists(outputFrameId)) {
+        const Position positionInWorld = getFrameTransform(inputFrameId).transform(position);
+        transformedPosition = getFrameTransform(outputFrameId).inverseTransform(positionInWorld);
     } else {
       frameError = true;
     }
@@ -86,13 +88,27 @@ RotationQuaternion AdapterBase::transformOrientation(const std::string& inputFra
   RotationQuaternion transformedOrientation;
   bool frameError = false;
 
+  if (inputFrameId == outputFrameId) {
+    return orientation;
+  }
+
   if (inputFrameId == getWorldFrameId()) {
 
-    if (outputFrameId == getWorldFrameId()) {
-      transformedOrientation = orientation;
+    if (outputFrameId == getBaseFrameId()) {
+      transformedOrientation = getOrientationBaseToWorld().inverted() * orientation ;
     } else if (frameIdExists(outputFrameId)) {
-      const Pose transform(getFrameTransform(outputFrameId));
-      transformedOrientation = transform.getRotation().inverted() * orientation;
+      transformedOrientation = getFrameTransform(outputFrameId).getRotation().inverted() * orientation;
+    } else {
+      frameError = true;
+    }
+
+  } else if (inputFrameId == getBaseFrameId()) {
+
+    if (outputFrameId == getWorldFrameId()) {
+      transformedOrientation = getOrientationBaseToWorld() * orientation;
+    } else if (frameIdExists(outputFrameId)) {
+      const RotationQuaternion orientationToWorld = getOrientationBaseToWorld() * orientation;
+      transformedOrientation = getFrameTransform(outputFrameId).getRotation().inverted() * orientationToWorld;
     } else {
       frameError = true;
     }
@@ -100,8 +116,13 @@ RotationQuaternion AdapterBase::transformOrientation(const std::string& inputFra
   } else if (frameIdExists(inputFrameId)) {
 
     if (outputFrameId == getWorldFrameId()) {
-      const Pose transform(getFrameTransform(inputFrameId));
-      transformedOrientation = transform.getRotation() * orientation;
+      transformedOrientation = getFrameTransform(inputFrameId).getRotation() * orientation;
+    } else if (outputFrameId == getBaseFrameId()) {
+      const RotationQuaternion orientationToWorld = getOrientationBaseToWorld() * orientation;
+      transformedOrientation =  getFrameTransform(inputFrameId).getRotation().inverted() * orientationToWorld;
+    } else if (frameIdExists(outputFrameId)) {
+      const RotationQuaternion orientationToWorld = getFrameTransform(inputFrameId).getRotation() * orientation;
+      transformedOrientation = getFrameTransform(outputFrameId).getRotation().inverted() * orientationToWorld;
     } else {
       frameError = true;
     }
@@ -170,15 +191,17 @@ Vector AdapterBase::transformVector(const std::string& inputFrameId,
   Vector transformedVector;
   bool frameError = false;
 
+  if (inputFrameId == outputFrameId) {
+    return vector;
+  }
+
   if (inputFrameId == getBaseFrameId()) {
 
-    if (outputFrameId == getBaseFrameId()) {
-      transformedVector = vector;
-    } else if (outputFrameId == getWorldFrameId()) {
+    if (outputFrameId == getWorldFrameId()) {
       transformedVector = getOrientationBaseToWorld().rotate(vector);
     } else if (frameIdExists(outputFrameId)) {
-      const Vector vectorInOdom = transformVector(inputFrameId, getWorldFrameId(), vector);
-      transformedVector = transformVector(getWorldFrameId(), outputFrameId, vectorInOdom);
+      const Vector vectorInWorld = getOrientationBaseToWorld().rotate(vector);
+      transformedVector = getFrameTransform(outputFrameId).getRotation().inverseRotate(vectorInWorld);
     } else {
       frameError = true;
     }
@@ -187,10 +210,8 @@ Vector AdapterBase::transformVector(const std::string& inputFrameId,
 
     if (outputFrameId == getBaseFrameId()) {
       transformedVector = getOrientationBaseToWorld().inverseRotate(vector);
-    } else if (outputFrameId == getWorldFrameId()) {
-      transformedVector = vector;
     } else if (frameIdExists(outputFrameId)) {
-      transformedVector = getFrameTransform(outputFrameId).getRotation().rotate(vector);
+      transformedVector = getFrameTransform(outputFrameId).getRotation().inverseRotate(vector);
     } else {
       frameError = true;
     }
@@ -198,10 +219,13 @@ Vector AdapterBase::transformVector(const std::string& inputFrameId,
   } else if (frameIdExists(inputFrameId)) {
 
     if (outputFrameId == getBaseFrameId()) {
-      const Vector vectorInOdom = transformVector(inputFrameId, getWorldFrameId(), vector);
-      transformedVector = transformVector(getWorldFrameId(), outputFrameId, vectorInOdom);
+      const Vector vectorInWorld = getFrameTransform(inputFrameId).getRotation().rotate(vector);
+      transformedVector = getOrientationBaseToWorld().inverseRotate(vectorInWorld);
     } else if (outputFrameId == getWorldFrameId()) {
       transformedVector = getFrameTransform(inputFrameId).getRotation().rotate(vector);
+    } else if (frameIdExists(outputFrameId)) {
+      const Vector vectorInWorld = getFrameTransform(inputFrameId).getRotation().rotate(vector);
+      transformedVector = getFrameTransform(outputFrameId).getRotation().inverseRotate(vectorInWorld);
     } else {
       frameError = true;
     }

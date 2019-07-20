@@ -82,7 +82,7 @@ class AdapterBase
   virtual Pose getFrameTransform(const std::string& frameId) const = 0;
   virtual bool frameIdExists(const std::string& frameId) const;
 
-  //! Transforming robot-related magnitudes (only to/from base or world frame)
+  //! Transforming robot-related magnitudes
   virtual Position transformPosition(const std::string& inputFrameId,
                                      const std::string& outputFrameId, const Position& position) const;
   virtual RotationQuaternion transformOrientation(const std::string& inputFrameId,
