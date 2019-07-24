@@ -8,8 +8,8 @@
 
 #include "free_gait_ros/StepRosConverter.hpp"
 
-// Quadruped model
-#include "quadruped_model/QuadrupedModel.hpp"
+// Anymal model
+#include "anymal_model/AnymalModel.hpp"
 
 // Kindr
 #include "kindr_ros/kindr_ros.hpp"

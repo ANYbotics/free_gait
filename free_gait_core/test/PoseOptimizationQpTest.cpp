@@ -18,7 +18,7 @@
 
 using namespace free_gait;
 
-TEST(PoseOptimizationQP, quadrupedSymmetricUnconstrained)
+TEST(PoseOptimizationQP, anymalSymmetricUnconstrained)
 {
   AdapterDummy adapter;
   PoseOptimizationQP optimization(adapter);
@@ -45,7 +45,7 @@ TEST(PoseOptimizationQP, quadrupedSymmetricUnconstrained)
   kindr::assertNear(expectedPosition, result.getPosition().vector(), 1e-3, KINDR_SOURCE_FILE_POS);
 }
 
-TEST(PoseOptimizationQP, quadrupedSymmetricWithOffsetUnconstrained)
+TEST(PoseOptimizationQP, anymalSymmetricWithOffsetUnconstrained)
 {
   AdapterDummy adapter;
   PoseOptimizationQP optimization(adapter);
@@ -71,7 +71,7 @@ TEST(PoseOptimizationQP, quadrupedSymmetricWithOffsetUnconstrained)
   kindr::assertNear(startPose.getTransformationMatrix(), result.getTransformationMatrix(), 1e-3, KINDR_SOURCE_FILE_POS);
 }
 
-TEST(PoseOptimizationQP, quadrupedAsymmetricUnconstrained)
+TEST(PoseOptimizationQP, anymalAsymmetricUnconstrained)
 {
   AdapterDummy adapter;
   PoseOptimizationQP optimization(adapter);
@@ -102,7 +102,7 @@ TEST(PoseOptimizationQP, quadrupedAsymmetricUnconstrained)
   kindr::assertNear(expectedPosition, result.getPosition().vector(), 1e-3, KINDR_SOURCE_FILE_POS);
 }
 
-TEST(PoseOptimizationQP, quadrupedSymmetricWithYawUnconstrained)
+TEST(PoseOptimizationQP, anymalSymmetricWithYawUnconstrained)
 {
   AdapterDummy adapter;
   PoseOptimizationQP optimization(adapter);
@@ -131,7 +131,7 @@ TEST(PoseOptimizationQP, quadrupedSymmetricWithYawUnconstrained)
 }
 
 //
-//TEST(quadruped, withYawUnconstrained)
+//TEST(anymal, withYawUnconstrained)
 //{
 //  PoseOptimization optimization;
 //
@@ -208,7 +208,7 @@ TEST(PoseOptimizationQP, constrained)
 //  kindr::assertNear(expectedPosition, pose.getPosition().vector(), 1e-3, KINDR_SOURCE_FILE_POS);
 }
 //
-//TEST(quadruped, DebugLoco1)
+//TEST(anymal, DebugLoco1)
 //{
 //  PoseOptimization optimization;
 //

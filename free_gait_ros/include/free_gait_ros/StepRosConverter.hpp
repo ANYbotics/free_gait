@@ -21,9 +21,9 @@
 #include <free_gait_msgs/BaseTarget.h>
 #include <free_gait_msgs/BaseTrajectory.h>
 
-// Quadruped model
+// Anymal model
 #undef LOG
-#include <quadruped_model/QuadrupedModel.hpp>
+#include <anymal_model/AnymalModel.hpp>
 
 // STD
 #include <vector>

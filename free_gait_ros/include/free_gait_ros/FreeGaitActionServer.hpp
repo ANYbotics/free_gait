@@ -12,8 +12,8 @@
 #include "free_gait_core/free_gait_core.hpp"
 #include "free_gait_ros/StepRosConverter.hpp"
 
-// Quadruped model
-#include "quadruped_model/QuadrupedModel.hpp"
+// Anymal model
+#include "anymal_model/AnymalModel.hpp"
 
 // ROS
 #include <ros/ros.h>

@@ -9,8 +9,8 @@
 #pragma once
 
 #include "free_gait_core/TypeDefs.hpp"
-#include <quadruped_model/QuadrupedState.hpp>
-#include <quadruped_model/QuadrupedModel.hpp>
+#include <anymal_model/AnymalState.hpp>
+#include <anymal_model/AnymalModel.hpp>
 
 // STD
 #include <vector>
@@ -19,10 +19,10 @@
 
 namespace free_gait {
 
-class State : public quadruped_model::QuadrupedState
+class State : public anymal_model::AnymalState
 {
  public:
-  using QD = quadruped_model::QuadrupedModel::QuadrupedDescription;
+  using AD = anymal_description::AnymalDescription;
 
   State();
   virtual ~State();

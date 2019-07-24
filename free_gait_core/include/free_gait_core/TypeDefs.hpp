@@ -8,9 +8,9 @@
 
 #pragma once
 
-// quadruped model
-#include <quadruped_model/common/typedefs.hpp>
-#include <quadruped_model/QuadrupedModel.hpp>
+// anymal model
+#include <anymal_model/AnymalModel.hpp>
+#include <anymal_model/typedefs.hpp>
 
 // STL
 #include <unordered_map>
@@ -29,13 +29,13 @@ struct EnumClassHash
 };
 
 // Import enum aliases.
-using QD = quadruped_model::QuadrupedModel::QuadrupedDescription;
+using AD = anymal_description::AnymalDescription;
 
-using LimbEnum = QD::LimbEnum;
-using BranchEnum = QD::BranchEnum;
-using JointNodeEnum = QD::JointNodeEnum;
-using ContactEnum = QD::ContactEnum;
-using FrameTransformEnum = QD::ConcreteTopology::FrameTransformEnum;
+using LimbEnum = AD::LimbEnum;
+using BranchEnum = AD::BranchEnum;
+using JointNodeEnum = AD::JointNodeEnum;
+using ContactEnum = AD::ContactEnum;
+using FrameTransformEnum = AD::ConcreteTopology::FrameTransformEnum;
 
 // Import kindr aliases.
 using Transform = romo::Pose;
@@ -60,17 +60,17 @@ using romo::Torque;
 using romo::Vector;
 
 // Import robot-specific kindr quantities.
-using quadruped_model::GeneralizedCoordinates;
-using quadruped_model::GeneralizedVelocities;
-using quadruped_model::GeneralizedAccelerations;
-using quadruped_model::JointPositions;
-using JointPositionsLeg = quadruped_model::JointPositionsLimb;
-using quadruped_model::JointVelocities;
-using JointVelocitiesLeg = quadruped_model::JointVelocitiesLimb;
-using quadruped_model::JointAccelerations;
-using JointAccelerationsLeg = quadruped_model::JointAccelerationsLimb;
-using JointEfforts = quadruped_model::JointTorques;
-using JointEffortsLeg = quadruped_model::JointTorquesLimb;
+using anymal_model::GeneralizedCoordinates;
+using anymal_model::GeneralizedVelocities;
+using anymal_model::GeneralizedAccelerations;
+using anymal_model::JointPositions;
+using JointPositionsLeg = anymal_model::JointPositionsLimb;
+using anymal_model::JointVelocities;
+using JointVelocitiesLeg = anymal_model::JointVelocitiesLimb;
+using anymal_model::JointAccelerations;
+using JointAccelerationsLeg = anymal_model::JointAccelerationsLimb;
+using JointEfforts = anymal_model::JointTorques;
+using JointEffortsLeg = anymal_model::JointTorquesLimb;
 
 enum class ControlLevel
 {

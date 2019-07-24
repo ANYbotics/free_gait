@@ -325,7 +325,7 @@ double Step::getBaseMotionPhase() const
 //  }
 //}
 
-//double Step::getAtStepPhaseForLeg(const quadruped_model::LimbEnum& limb)
+//double Step::getAtStepPhaseForLeg(const anymal_model::LimbEnum& limb)
 //{
 //  return loco::mapTo01Range(getTime() - getStateDuration(State::PreStep), 0.0, getAtStepDurationForLeg(limb));
 //}

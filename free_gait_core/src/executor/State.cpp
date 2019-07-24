@@ -13,7 +13,7 @@
 namespace free_gait {
 
 State::State()
-    : QuadrupedState(),
+    : AnymalState(),
       robotExecutionStatus_(false)
 {
 }
@@ -117,44 +117,44 @@ void State::setIgnoreForPoseAdaptation(const LimbEnum& limb, bool ignorePoseAdap
 const JointPositionsLeg State::getJointPositionsForLimb(const LimbEnum& limb) const
 {
   return JointPositionsLeg(
-      quadruped_model::QuadrupedState::getJointPositions().vector().segment<QD::getNumDofLimb()>(
-          QD::getLimbStartIndexInJ(limb))
+      anymal_model::AnymalState::getJointPositions().vector().segment<AD::getNumDofLimb()>(
+          AD::getLimbStartIndexInJ(limb))
   );
 }
 
 void State::setJointPositionsForLimb(const LimbEnum& limb, const JointPositionsLeg& jointPositions)
 {
-  quadruped_model::QuadrupedState::getJointPositions().setSegment<QD::getNumDofLimb()>(
-      QD::getLimbStartIndexInJ(limb), jointPositions);
+  anymal_model::AnymalState::getJointPositions().setSegment<AD::getNumDofLimb()>(
+      AD::getLimbStartIndexInJ(limb), jointPositions);
 }
 
 void State::setAllJointPositions(const JointPositions& jointPositions)
 {
-  quadruped_model::QuadrupedState::setJointPositions(quadruped_model::JointPositions(jointPositions.vector()));
+  anymal_model::AnymalState::setJointPositions(anymal_model::JointPositions(jointPositions.vector()));
 }
 
 const JointVelocitiesLeg State::getJointVelocitiesForLimb(const LimbEnum& limb) const
 {
   return JointVelocitiesLeg(
-      quadruped_model::QuadrupedState::getJointVelocities().vector().segment<QD::getNumDofLimb()>(
-      QD::getLimbStartIndexInJ(limb)
+      anymal_model::AnymalState::getJointVelocities().vector().segment<AD::getNumDofLimb()>(
+      AD::getLimbStartIndexInJ(limb)
   ));
 }
 
 void State::setJointVelocitiesForLimb(const LimbEnum& limb, const JointVelocitiesLeg& jointVelocities)
 {
-  quadruped_model::QuadrupedState::getJointVelocities().setSegment<QD::getNumDofLimb()>(
-      QD::getLimbStartIndexInJ(limb), jointVelocities);
+  anymal_model::AnymalState::getJointVelocities().setSegment<AD::getNumDofLimb()>(
+      AD::getLimbStartIndexInJ(limb), jointVelocities);
 }
 
 void State::setAllJointVelocities(const JointVelocities& jointVelocities)
 {
-  quadruped_model::QuadrupedState::setJointVelocities(quadruped_model::JointVelocities(jointVelocities.vector()));
+  anymal_model::AnymalState::setJointVelocities(anymal_model::JointVelocities(jointVelocities.vector()));
 }
 
 const JointAccelerationsLeg State::getJointAccelerationsForLimb(const LimbEnum& limb) const
 {
-  return JointAccelerationsLeg(jointAccelerations_.vector().segment<QD::getNumDofLimb()>(QD::getLimbStartIndexInJ(limb)));
+  return JointAccelerationsLeg(jointAccelerations_.vector().segment<AD::getNumDofLimb()>(AD::getLimbStartIndexInJ(limb)));
 }
 
 const JointAccelerations& State::getAllJointAccelerations() const
@@ -164,7 +164,7 @@ const JointAccelerations& State::getAllJointAccelerations() const
 
 void State::setJointAccelerationsForLimb(const LimbEnum& limb, const JointAccelerationsLeg& jointAccelerations)
 {
-  jointAccelerations_.setSegment<QD::getNumDofLimb()>(QD::getLimbStartIndexInJ(limb), jointAccelerations);
+  jointAccelerations_.setSegment<AD::getNumDofLimb()>(AD::getLimbStartIndexInJ(limb), jointAccelerations);
 }
 
 void State::setAllJointAccelerations(const JointAccelerations& jointAccelerations)
@@ -174,7 +174,7 @@ void State::setAllJointAccelerations(const JointAccelerations& jointAcceleration
 
 const JointEffortsLeg State::getJointEffortsForLimb(const LimbEnum& limb) const
 {
-  return JointEffortsLeg(getAllJointEfforts().vector().segment<QD::getNumDofLimb()>(QD::getLimbStartIndexInJ(limb)));
+  return JointEffortsLeg(getAllJointEfforts().vector().segment<AD::getNumDofLimb()>(AD::getLimbStartIndexInJ(limb)));
 }
 
 const JointEfforts& State::getAllJointEfforts() const
@@ -184,7 +184,7 @@ const JointEfforts& State::getAllJointEfforts() const
 
 void State::setJointEffortsForLimb(const LimbEnum& limb, const JointEffortsLeg& jointEfforts)
 {
-  jointEfforts_.getSegment<QD::getNumDofLimb()>(QD::getLimbStartIndexInJ(limb)) = jointEfforts;
+  jointEfforts_.getSegment<AD::getNumDofLimb()>(AD::getLimbStartIndexInJ(limb)) = jointEfforts;
 }
 
 void State::setAllJointEfforts(const JointEfforts& jointEfforts)
@@ -199,7 +199,7 @@ const ControlSetup& State::getControlSetup(const BranchEnum& branch) const
 
 const ControlSetup& State::getControlSetup(const LimbEnum& limb) const
 {
-  return controlSetups_.at(QD::mapEnums<QD::BranchEnum>(limb));
+  return controlSetups_.at(AD::mapEnums<AD::BranchEnum>(limb));
 }
 
 bool State::isControlSetupEmpty(const BranchEnum& branch) const
@@ -212,7 +212,7 @@ bool State::isControlSetupEmpty(const BranchEnum& branch) const
 
 bool State::isControlSetupEmpty(const LimbEnum& limb) const
 {
-  return isControlSetupEmpty(QD::mapEnums<QD::BranchEnum>(limb));
+  return isControlSetupEmpty(AD::mapEnums<AD::BranchEnum>(limb));
 }
 
 void State::setControlSetup(const BranchEnum& branch, const ControlSetup& controlSetup)
@@ -222,7 +222,7 @@ void State::setControlSetup(const BranchEnum& branch, const ControlSetup& contro
 
 void State::setControlSetup(const LimbEnum& limb, const ControlSetup& controlSetup)
 {
-  controlSetups_[QD::mapEnums<QD::BranchEnum>(limb)] = controlSetup;
+  controlSetups_[AD::mapEnums<AD::BranchEnum>(limb)] = controlSetup;
 }
 
 void State::setEmptyControlSetup(const BranchEnum& branch)
@@ -237,21 +237,21 @@ void State::setEmptyControlSetup(const BranchEnum& branch)
 
 void State::setEmptyControlSetup(const LimbEnum& limb)
 {
-  setEmptyControlSetup(QD::mapEnums<QD::BranchEnum>(limb));
+  setEmptyControlSetup(AD::mapEnums<AD::BranchEnum>(limb));
 }
 
 void State::getAllJointNames(std::vector<std::string>& jointNames) const
 {
   jointNames.clear();
-  jointNames.reserve(QD::getJointsDimension());
-  for (const auto& jointKey : QD::getJointKeys()) {
-    jointNames.push_back(QD::mapKeyEnumToKeyName(jointKey.getEnum()));
+  jointNames.reserve(AD::getJointsDimension());
+  for (const auto& jointKey : AD::getJointKeys()) {
+    jointNames.push_back(AD::mapKeyEnumToKeyName(jointKey.getEnum()));
   }
 }
 
 std::ostream& operator<<(std::ostream& out, const State& state)
 {
-  out << static_cast<const quadruped_model::QuadrupedState&>(state) << std::endl;
+  out << static_cast<const anymal_model::AnymalState&>(state) << std::endl;
   out << "Support legs: " << state.isSupportLegs_ << std::endl;
   out << "Ignore contact: " << state.ignoreContact_ << std::endl;
   out << "Ignore for pose adaptation: " << state.ignoreForPoseAdaptation_ << std::endl;

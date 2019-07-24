@@ -13,7 +13,7 @@
 
   <depend>eigen</depend>
   <depend>any_measurements</depend>
-  <depend>quadruped_model</depend>
+  <depend>anymal_model</depend>
   <depend>numopt_common</depend>
   <depend>numopt_quadprog</depend>
   <depend>numopt_sqp</depend>
