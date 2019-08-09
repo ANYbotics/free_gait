@@ -23,6 +23,7 @@ class ActionLoader:
         self.collection_list.update()
         self.action_sequence_queue = []
         self.action = None
+        self.sending_in_progress = False
         # Reference to the action client or preview publisher.
         self.execute_steps_relay = None
 
@@ -97,6 +98,19 @@ class ActionLoader:
         return response
 
     def send_action(self, action_id, use_preview):
+        result = free_gait_msgs.msg.ExecuteActionResult()
+
+        if self.sending_in_progress:
+            result.status = result.RESULT_FAILED
+            rospy.logerr('Action Loader server is busy.')
+            return result
+
+        self.sending_in_progress = True
+        result.status = self._send_action(action_id, use_preview)
+        self.sending_in_progress = False
+        return result
+
+    def _send_action(self, action_id, use_preview):
         self.reset()
         if use_preview:
             self.execute_steps_relay = self.preview_publisher
@@ -135,7 +149,7 @@ class ActionLoader:
                 result.status = result.RESULT_FAILED
                 rospy.logerr('An error occurred while loading the action.')
                 return result
-            
+
             self.action.register_callback(self._action_feedback_callback, self._action_done_callback)
             self.action.wait_for_state([ActionState.ERROR, ActionState.ACTIVE, ActionState.IDLE, ActionState.DONE])
 
