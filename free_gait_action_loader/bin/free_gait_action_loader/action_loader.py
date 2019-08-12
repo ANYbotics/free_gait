@@ -106,7 +106,7 @@ class ActionLoader:
             return result
 
         self.sending_in_progress = True
-        result.status = self._send_action(action_id, use_preview)
+        result = self._send_action(action_id, use_preview)
         self.sending_in_progress = False
         return result
 
