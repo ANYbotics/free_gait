@@ -71,7 +71,8 @@ class ActionLoader:
     def _execute_action_callback(self, goal):
         self.action_sequence_queue = []
         result = self.send_action(goal.action_id, False)
-        if result.status != result.RESULT_NOT_FOUND:
+        if result.status != result.RESULT_NOT_FOUND \
+                and result.status != result.RESULT_FAILED:
             self.action.wait_for_state([ActionState.ERROR, ActionState.DONE])
         result.status = result.RESULT_DONE
         self.execute_action_server.set_succeeded(result)
