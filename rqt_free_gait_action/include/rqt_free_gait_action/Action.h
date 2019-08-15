@@ -45,7 +45,7 @@ public:
 
   Action();
 
-  Action(QString id, QString name, QString description);
+  Action(QString id, QString name, QString description, QString type);
 
   ~Action();
 
@@ -59,6 +59,8 @@ public:
 
   const QString& getDescription() const;
 
+  const QString& getType() const;
+
 private:
 
   /***************************************************************************/
@@ -68,6 +70,7 @@ private:
   QString id_;
   QString name_;
   QString description_;
+  QString type_;
 };
 
 } // namespace

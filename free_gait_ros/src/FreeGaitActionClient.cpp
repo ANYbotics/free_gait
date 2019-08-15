@@ -64,13 +64,12 @@ void FreeGaitActionClient::registerCallback(
 
 void FreeGaitActionClient::sendGoal(const free_gait_msgs::ExecuteStepsGoal& goal)
 {
+  bool usePreview = false;
   if (!nodeHandle_.hasParam("use_preview")) {
-    ROS_ERROR("Did not find ROS parameter for 'use_preview'.");
-    return;
+    ROS_DEBUG("Did not find ROS parameter for 'use_preview'. Setting to false.");
+  } else {
+    nodeHandle_.getParam("use_preview", usePreview);
   }
-
-  bool usePreview;
-  nodeHandle_.getParam("use_preview", usePreview);
   return sendGoal(goal, usePreview);
 }
 

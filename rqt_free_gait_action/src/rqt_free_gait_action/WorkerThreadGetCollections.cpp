@@ -82,7 +82,8 @@ void WorkerThreadGetCollections::run() {
     for (auto actionItem : actionsResponse.actions) {
       Action action(QString::fromStdString(actionItem.id),
                     QString::fromStdString(actionItem.name),
-                    QString::fromStdString(actionItem.description));
+                    QString::fromStdString(actionItem.description),
+                    QString::fromStdString(actionItem.type));
       actionModel->addAction(action);
     }
 

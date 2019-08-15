@@ -470,7 +470,11 @@ void FreeGaitActionPlugin::onActionSelectionChanged(
     selectedCollection_ = "";
     ui_.pushButtonSend->setEnabled(true);
     ui_.pushButtonSend->setText("Send");
-    ui_.pushButtonPreview->setEnabled(true);
+    if (action.getType() == "launch") {
+      ui_.pushButtonPreview->setEnabled(false);
+    } else {
+      ui_.pushButtonPreview->setEnabled(true);
+    }
   }
 }
 

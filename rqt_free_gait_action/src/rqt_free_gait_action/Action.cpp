@@ -42,10 +42,11 @@ Action::Action() {
 
 }
 
-Action::Action(QString id, QString name, QString description)
+Action::Action(QString id, QString name, QString description, QString type)
     : id_(id),
       name_(name),
-      description_(description) {
+      description_(description),
+      type_(type) {
 
 }
 
@@ -67,6 +68,10 @@ const QString &Action::getName() const {
 
 const QString &Action::getDescription() const {
   return description_;
+}
+
+const QString &Action::getType() const {
+  return type_;
 }
 
 } // namespace
