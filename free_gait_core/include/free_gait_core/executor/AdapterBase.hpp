@@ -1,7 +1,7 @@
 /*
  * AdapterBase.hpp
  *
- *  Created on: Oct 22, 2015 
+ *  Created on: Oct 22, 2015
  *      Author: Péter Fankhauser
  *   Institute: ETH Zurich, Autonomous Systems Lab
  */
@@ -82,7 +82,10 @@ class AdapterBase
   virtual Pose getFrameTransform(const std::string& frameId) const = 0;
   virtual bool frameIdExists(const std::string& frameId) const;
 
-  //! Transforming robot-related magnitudes
+  /*!
+   * Transforming robot-related magnitudes.
+   * @throws std::invalid_argument if failing.
+   */
   virtual Position transformPosition(const std::string& inputFrameId,
                                      const std::string& outputFrameId, const Position& position) const;
   virtual RotationQuaternion transformOrientation(const std::string& inputFrameId,
