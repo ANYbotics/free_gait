@@ -5,9 +5,7 @@
   <description>Dynamic loading of Free Gait actions.</description>
   <maintainer email="pfankhauser@anybotics.com">Peter Fankhauser</maintainer>
   <author email="pfankhauser@anybotics.com">Peter Fankhauser</author>
-  <license>BSD</license>
-  <url type="website">https://github.com/anybotics/free_gait</url>
-  <url type="bugtracker">https://github.com/anybotics/free_gait/issues</url>
+  <license>Proprietary</license>
 
   <buildtool_depend>catkin</buildtool_depend>
   <depend>rospy</depend>
